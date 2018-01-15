@@ -12,6 +12,7 @@ namespace Generator
         {
             var items = Config.GetItems();
 
+            #region Service
             foreach (var item in items)
             {
                 GenTransactions.txGen txGenerator = new GenTransactions.txGen();
@@ -29,6 +30,19 @@ namespace Generator
 
             GenService.ServiceImpGen serviceImpGen = new GenService.ServiceImpGen();
             serviceImpGen.CreateImp(Config.GetServiceName(), items);
+
+            GenService.GenBase baseGen = new GenService.GenBase();
+            baseGen.CreateBase(Config.GetServiceName());
+
+            #endregion Service
+
+            #region Client
+            foreach (var item in items)
+            {
+                Client.entService.GenService genServiceCaller = new Client.entService.GenService();
+                genServiceCaller.CreateService(item);
+            }
+            #endregion Client
 
             Console.ReadLine();
         }

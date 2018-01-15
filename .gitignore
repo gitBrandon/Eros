@@ -3,4 +3,8 @@ bin/
 
 obj/
 
+\.vs/
+
+Generator\.csproj\.user
+
 GenViewModel/\.vs/
