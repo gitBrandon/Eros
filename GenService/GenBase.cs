@@ -15,16 +15,32 @@ namespace Generator.GenService
         string _serviceProcessNamespace = Config.GetServiceProcessNamespace();
         bool _UseTableID = Config.GetUseTableAsID();
         StringBuilder _contents = new StringBuilder();
-        string _strDb = "";
-        string _strResponse = "";
-        string _strRequest = "";
 
         public GenBase()
         {
 
         }
 
-        public void CreateRequest(string strName)
+        public void CreateBase(string strName)
+        {
+            try
+            {
+                Directory.CreateDirectory(_filePath);
+                File.Create(_filePath + "/Base.cs").Close();
+
+                CreateRequest(strName);
+                CreateResponse(strName);
+                CreateActionType(strName);
+
+                Save(strName);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+        }
+
+        private void CreateRequest(string strName)
         {
             _contents.AppendLine("[DataContract]");
             _contents.AppendLine("public class RequestBase");
@@ -43,7 +59,7 @@ namespace Generator.GenService
             _contents.AppendLine("");
         }
 
-        public void CreateResponse(string strName)
+        private void CreateResponse(string strName)
         {
             _contents.AppendLine("[DataContract]");
             _contents.AppendLine("public class ResponseBase");
@@ -63,7 +79,7 @@ namespace Generator.GenService
             _contents.AppendLine("");
         }
 
-        public void CreateActionType()
+        private void CreateActionType(string strName)
         {
             _contents.AppendLine("[DataContract]");
             _contents.AppendLine("public enum Action");
@@ -82,11 +98,13 @@ namespace Generator.GenService
             _contents.AppendLine("ModifyList,");
             _contents.AppendLine("[EnumMember]");
             _contents.AppendLine("Delete");
+            _contents.AppendLine("[EnumMember]");
+            _contents.AppendLine("TemplateGen,");
             _contents.AppendLine("}");
             _contents.AppendLine("");
         }
 
-        public void Save(string strName)
+        private void Save(string strName)
         {
             StringBuilder sbFull = new StringBuilder();
             sbFull.AppendLine("using System;");
@@ -107,6 +125,17 @@ namespace Generator.GenService
             #endregion classes
             sbFull.AppendLine("}");
 
+            try
+            {
+                File.WriteAllText(_filePath + "/Base.cs", sbFull.ToString());
+                Console.WriteLine("Added new Base file : Base.cs");
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+
+            string strResult = sbFull.ToString();
         }
     }
 }
