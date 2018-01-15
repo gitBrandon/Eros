@@ -9,7 +9,7 @@ namespace Generator.GenService
 {
     public class GenBase
     {
-        string _filePath = Path.Combine(Environment.CurrentDirectory, "output", "ServiceProcesses");
+        string _filePath = Path.Combine(Environment.CurrentDirectory, "output", "transactions");
         string _modelNameSpace = Config.GetModelNamespace();
         string _txNamespace = Config.GetTxNamespace();
         string _serviceProcessNamespace = Config.GetServiceProcessNamespace();
