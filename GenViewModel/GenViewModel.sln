@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenViewModel", "GenViewModel\GenViewModel.csproj", "{91857BC7-A1A3-4F95-A009-64564E61E799}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91857BC7-A1A3-4F95-A009-64564E61E799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91857BC7-A1A3-4F95-A009-64564E61E799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91857BC7-A1A3-4F95-A009-64564E61E799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91857BC7-A1A3-4F95-A009-64564E61E799}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {497BC333-1099-4680-8BA6-58235E61A344}
+	EndGlobalSection
+EndGlobal
