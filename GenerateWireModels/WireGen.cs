@@ -99,7 +99,7 @@ namespace Generator.GenerateWireModels
             sbFull.AppendLine();
             #endregion usings
             #region namespace
-            sbFull.AppendLine("namespace " + _mainNamespace + ".Models.Wires");
+            sbFull.AppendLine("namespace " + _modelNameSpace + ".Wires");
             sbFull.AppendLine("{");
             #region classes
             sbFull.AppendLine(_contents.ToString());

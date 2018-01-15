@@ -12,38 +12,52 @@ namespace Generator
         {
             var items = Config.GetItems();
 
-            #region Service
-            foreach (var item in items)
+            Console.WriteLine("Generate service?");
+            string answer = Console.ReadLine();
+            if (answer.ToUpper().Contains("Y") || answer.ToUpper().Contains("YES") || answer.ToUpper().Contains(""))
             {
-                GenTransactions.txGen txGenerator = new GenTransactions.txGen();
-                txGenerator.CreateTx(item);
+                Console.WriteLine("Generating service...");
 
-                GenService.ServiceProcessGen serviceProcessGen = new GenService.ServiceProcessGen();
-                serviceProcessGen.CreateProcess(item);
+                #region Service
+                foreach (var item in items)
+                {
+                    GenTransactions.txGen txGenerator = new GenTransactions.txGen();
+                    txGenerator.CreateTx(item);
 
-                GenerateWireModels.WireGen wireGen = new GenerateWireModels.WireGen();
-                wireGen.CreateWire(item);
+                    GenService.ServiceProcessGen serviceProcessGen = new GenService.ServiceProcessGen();
+                    serviceProcessGen.CreateProcess(item);
+
+                    GenerateWireModels.WireGen wireGen = new GenerateWireModels.WireGen();
+                    wireGen.CreateWire(item);
+                }
+
+                GenService.ServiceInterfaceGen serviceInterfaceGen = new GenService.ServiceInterfaceGen();
+                serviceInterfaceGen.CreateInterface(Config.GetServiceName(), items);
+
+                GenService.ServiceImpGen serviceImpGen = new GenService.ServiceImpGen();
+                serviceImpGen.CreateImp(Config.GetServiceName(), items);
+
+                GenerateWireModels.GenBase baseGen = new GenerateWireModels.GenBase();
+                baseGen.CreateBase(Config.GetServiceName());
+
+                #endregion Service
             }
 
-            GenService.ServiceInterfaceGen serviceInterfaceGen = new GenService.ServiceInterfaceGen();
-            serviceInterfaceGen.CreateInterface(Config.GetServiceName(), items);
-
-            GenService.ServiceImpGen serviceImpGen = new GenService.ServiceImpGen();
-            serviceImpGen.CreateImp(Config.GetServiceName(), items);
-
-            GenService.GenBase baseGen = new GenService.GenBase();
-            baseGen.CreateBase(Config.GetServiceName());
-
-            #endregion Service
-
-            #region Client
-            foreach (var item in items)
+            Console.WriteLine("Generate client?");
+            answer = Console.ReadLine();
+            if (answer.ToUpper().Contains("Y") || answer.ToUpper().Contains("YES") || answer.ToUpper().Contains(""))
             {
-                Client.entService.GenService genServiceCaller = new Client.entService.GenService();
-                genServiceCaller.CreateService(item);
-            }
-            #endregion Client
+                #region Client
+                foreach (var item in items)
+                {
+                    Client.entService.GenService genServiceCaller = new Client.entService.GenService();
+                    genServiceCaller.CreateService(item);
 
+                    Client.entViewModel.genViewModel genViewModel = new Client.entViewModel.genViewModel();
+                    genViewModel.CreateViewModel(item);
+                }
+                #endregion Client
+            }
             Console.ReadLine();
         }
     }

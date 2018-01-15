@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generator.GenService
+namespace Generator.GenerateWireModels
 {
     public class GenBase
     {
@@ -97,9 +97,11 @@ namespace Generator.GenService
             _contents.AppendLine("[EnumMember]");
             _contents.AppendLine("ModifyList,");
             _contents.AppendLine("[EnumMember]");
-            _contents.AppendLine("Delete");
+            _contents.AppendLine("Delete,");
             _contents.AppendLine("[EnumMember]");
-            _contents.AppendLine("TemplateGen,");
+            _contents.AppendLine("FlagDeleted,");
+            _contents.AppendLine("[EnumMember]");
+            _contents.AppendLine("TemplateGen");
             _contents.AppendLine("}");
             _contents.AppendLine("");
         }
@@ -116,7 +118,7 @@ namespace Generator.GenService
 
             sbFull.AppendLine("");
 
-            sbFull.AppendLine("namespace " + _modelNameSpace + ".Models.Base");
+            sbFull.AppendLine("namespace " + _modelNameSpace + ".Base");
             sbFull.AppendLine("{");
             #region classes
             _contents.AppendLine("");

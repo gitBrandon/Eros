@@ -63,5 +63,10 @@ namespace Generator
         {
             return ConfigurationManager.AppSettings["Namespace"];
         }
+
+        public static string GetServiceEndpoint()
+        {
+            return ConfigurationManager.AppSettings["ServiceEndpointOnceComplete"];
+        }
     }
 }

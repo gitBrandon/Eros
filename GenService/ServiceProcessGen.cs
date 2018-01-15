@@ -42,6 +42,7 @@ namespace Generator.GenService
                 ModifyList(strName);
                 Delete(strName);
                 DeleteFlag(strName);
+                GenTemplateGet(strName);
 
                 Save(strName);
             }
@@ -441,6 +442,17 @@ namespace Generator.GenService
             _contents.AppendLine("} break;");
             _contents.AppendLine("}");
             #endregion switch custom field/value
+            _contents.AppendLine("} break;");
+        }
+
+        private void GenTemplateGet(string strName)
+        {
+            _contents.AppendLine("case " + _modelNameSpace + ".Base.Action.TemplateGen:");
+            _contents.AppendLine("{");
+            _contents.AppendLine("logMain.Info(\"Inside process " + strName + " GetTemplateGen \");");
+            _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
+            _contents.AppendLine("");
+            _contents.AppendLine("retVal." + strName + "List.Add(new " + _modelNameSpace + ".Wires." + strName + "Item();");
             _contents.AppendLine("} break;");
         }
 
