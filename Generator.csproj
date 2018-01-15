@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="GenerateWireModels\WireGen.cs" />
+    <Compile Include="GenService\GenBase.cs" />
     <Compile Include="GenService\ServiceImpGen.cs" />
     <Compile Include="GenService\ServiceInterfaceGen.cs" />
     <Compile Include="GenService\ServiceProcessGen.cs" />

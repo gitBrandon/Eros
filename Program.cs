@@ -30,6 +30,9 @@ namespace Generator
             GenService.ServiceImpGen serviceImpGen = new GenService.ServiceImpGen();
             serviceImpGen.CreateImp(Config.GetServiceName(), items);
 
+            GenService.GenBase baseGen = new GenService.GenBase();
+            baseGen.CreateBase(Config.GetServiceName());
+
             Console.ReadLine();
         }
     }
