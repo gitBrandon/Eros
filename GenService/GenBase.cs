@@ -106,6 +106,7 @@ namespace Generator.GenService
             _contents.AppendLine("");
             #endregion classes
             sbFull.AppendLine("}");
+
         }
     }
 }
