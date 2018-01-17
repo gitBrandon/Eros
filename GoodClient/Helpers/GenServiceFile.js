@@ -12,72 +12,72 @@ function ServiceGen() {
 
         // Get All
 
-        strServiceData += "    self.GetAll(callback) {"
+        strServiceData += "    self.GetAll = function(callback) {"
         strServiceData += "         var request = {"
-        strServiceData += '             "Action": 0,';
-        strServiceData += "         }"
-        strServiceData += "         Call(request, callback)";
-        strServiceData += "    }"
+        strServiceData += '             "Action": 0';
+        strServiceData += "         };"
+        strServiceData += "         Call(request, callback);";
+        strServiceData += "    };"
 
         // Get Single
 
-        strServiceData += "    self.GetSingle(id, callback) {"
+        strServiceData += "    self.GetSingle = function(id, callback) {"
         strServiceData += "         var request = {"
         strServiceData += '             "Action": 1,';
-        strServiceData += '             "CustomField": "ID"';
-        strServiceData += '             "CustomField": id';
-        strServiceData += "         }"
-        strServiceData += "         Call(request, callback)";
-        strServiceData += "    }"
+        strServiceData += '             "CustomField": "ID",';
+        strServiceData += '             "CustomValue": id';
+        strServiceData += "         };"
+        strServiceData += "         Call(request, callback);";
+        strServiceData += "    };"
 
         // Create
 
-        strServiceData += "    self.Create(request, callback) {"
+        strServiceData += "    self.Create = function(request, callback) {"
         strServiceData += "         var request = {"
         strServiceData += '             "Action": 2,';
         strServiceData += '             ' + el.Name + 'Item : JSON.parse(ko.toJSON(request))';
-        strServiceData += "         }"
-        strServiceData += "         Call(request, callback)";
-        strServiceData += "    }"
+        strServiceData += "         };"
+        strServiceData += "         Call(request, callback);";
+        strServiceData += "    };"
 
         // Modify
 
-        strServiceData += "    self.Modify(request, callback) {"
+        strServiceData += "    self.Modify = function(request, callback) {"
         strServiceData += "         var request = {"
         strServiceData += '             "Action": 4,';
         strServiceData += '             ' + el.Name + 'Item : JSON.parse(ko.toJSON(request))';
-        strServiceData += "         }"
-        strServiceData += "         Call(request, callback)";
-        strServiceData += "    }"
+        strServiceData += "         };"
+        strServiceData += "         Call(request, callback);";
+        strServiceData += "    };"
 
         // Delete 
 
-        strServiceData += "    self.Delete(id, callback) {"
+        strServiceData += "    self.Delete = function(id, callback) {"
         strServiceData += "         var request = {"
         strServiceData += '             "Action": 6,';
-        strServiceData += '             "CustomField": "ID"';
-        strServiceData += '             "CustomField": id';
-        strServiceData += "         }"
-        strServiceData += "         Call(request, callback)";
-        strServiceData += "    }"
+        strServiceData += '             "CustomField": "ID",';
+        strServiceData += '             "CustomValue": id';
+        strServiceData += "         };"
+        strServiceData += "         Call(request, callback);";
+        strServiceData += "    };"
 
         // Flag Delete 
 
-        strServiceData += "    self.FlagDelete(id, callback) {"
+        strServiceData += "    self.FlagDelete = function(id, callback) {"
         strServiceData += "         var request = {"
         strServiceData += '             "Action": 7,';
-        strServiceData += '             "CustomField": "ID"';
-        strServiceData += '             "CustomField": id';
-        strServiceData += "         }"
-        strServiceData += "         Call(request, callback)";
-        strServiceData += "    }"
+        strServiceData += '             "CustomField": "ID",';
+        strServiceData += '             "CustomValue": id';
+        strServiceData += "         };"
+        strServiceData += "         Call(request, callback);";
+        strServiceData += "    };"
 
         strServiceData += "    function Call(request, callback) {"
         strServiceData += "        _serviceCaller.Call('Process' + " + el.Name + ", request, callback);";
-        strServiceData += "    }"
+        strServiceData += "    };"
 
-        strServiceData += "}"
+        strServiceData += "};"
 
-        _fw.Write(el.Name + "/js", "Service.js", strServiceData);
+        _fw.Write(el.Name + "/js", "Service", strServiceData);
     }
 }

@@ -2,9 +2,9 @@ function FileWriter() {
     var self = this;
     var _filePath;
     var _configHelper = new ConfigHelper();
+    var fs = require('fs');
 
     self.Write = function(folder, file, data) {
-        var fs = require('fs');
         fs.writeFile(_filePath + folder + "/" + file + ".js", data, function(err) {
             if (err) {
                 return console.log(err);

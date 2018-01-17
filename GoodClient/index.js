@@ -9,11 +9,18 @@ function Index() {
     // Common
     var _serviceCallerGen = new GenServiceCaller();
 
+    var _fw = new FileWriter();
+
+    var fs = require('fs');
+
+    var _filePath;
+
     function Initialise() {
         _vm = new MainViewModel();
         ko.applyBindings(_vm);
         GetItems();
         GetServiceEndpoint();
+        GetFilePath();
     }
 
     function MainViewModel() {
@@ -23,14 +30,19 @@ function Index() {
             $(self.Items()).each(function(idx, el) {
                 if (el.IsChecked()) {
                     Call(el.Name, function(response) {
+                        if (!fs.existsSync(_filePath + "/" + el.Name)) {
+                            fs.mkdirSync(_filePath + "/" + el.Name);
+                        }
+                        if (!fs.existsSync(_filePath + "/" + el.Name + "/js")) {
+                            fs.mkdirSync(_filePath + "/" + el.Name + "/js");
+                        }
                         GenViewModel(el, response);
                         _mainGen.Gen(el, response);
                         _serviceGen.Gen(el, response);
                     });
                 }
             })
-
-            _serviceCallerGen.Gen(el, response);
+            _serviceCallerGen.Gen();
         }
     }
 
@@ -51,6 +63,12 @@ function Index() {
     function GetServiceEndpoint() {
         _configHelper.GetServiceEndPoint(function(response) {
             _serviceEndPoint = response;
+        })
+    }
+
+    function GetFilePath() {
+        _configHelper.GetFilePath(function(response) {
+            _filePath = response;
         })
     }
 
@@ -76,11 +94,13 @@ function Index() {
         var strVMData = "";
 
         strVMData += "function " + el.Name + "ViewModel() {";
-        strVMData += "    var self = this";
+        strVMData += "    var self = this;";
         for (var prop in item) {
-            strVMData += "    self." + prop + " = ko.observable()";
+            strVMData += "    self." + prop + " = ko.observable();";
         }
         strVMData += "}"
+
+        _fw.Write(el.Name + "/js", "" + el.Name + "ViewModel", strVMData);
     }
 
     function GenMainJS(el, response) {

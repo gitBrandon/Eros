@@ -2,8 +2,11 @@ function GenServiceCaller() {
     var self = this;
     var _fw = new FileWriter();
     var _serviceEndPoint;
+    var _configHelper = new ConfigHelper();
+    var fs = require('fs');
+    var _filePath;
 
-    self.Gen = function(el, response) {
+    self.Gen = function(el) {
         var strServiceCallerData = `
 			function ServiceCaller() {
 			    var self = this;
@@ -17,13 +20,18 @@ function GenServiceCaller() {
 			            data: JSON.stringify(request),
 			            success: function(response) {
 			            	callback(response);
-			            }
-			        })
-			    }
+			            };
+			        });
+			    };
 			};
 		`;
-
-        _fw.Write(el.Name + "/js", "" + el.Name + ".js", strMainData);
+        if (!fs.existsSync(_filePath + "/Common")) {
+            fs.mkdirSync(_filePath + "/Common");
+        }
+        if (!fs.existsSync(_filePath + "/Common/Service")) {
+            fs.mkdirSync(_filePath + "/Common/Service");
+        }
+        _fw.Write("Common/Service", "ServiceCaller", strServiceCallerData);
     }
 
     function GetServiceEndpoint() {
@@ -32,5 +40,12 @@ function GenServiceCaller() {
         })
     }
 
+    function GetFilePath() {
+        _configHelper.GetFilePath(function(response) {
+            _filePath = response;
+        })
+    }
+
+    GetFilePath();
     GetServiceEndpoint();
 }
