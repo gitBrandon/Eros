@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -44,26 +47,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\entService\GenService.cs" />
+    <Compile Include="Client\entViewModel\genViewModel.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="GenerateWireModels\WireGen.cs" />
-    <Compile Include="GenService\GenBase.cs" />
+    <Compile Include="GenerateWireModels\GenBase.cs" />
     <Compile Include="GenService\ServiceImpGen.cs" />
     <Compile Include="GenService\ServiceInterfaceGen.cs" />
     <Compile Include="GenService\ServiceProcessGen.cs" />
     <Compile Include="GenTransactions\txGen.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceCaller.cs" />
     <Compile Include="TestClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Client\common\" />
     <Folder Include="Client\entGeneral\" />
-    <Folder Include="Client\entViewModel\" />
     <Folder Include="CreateScript\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

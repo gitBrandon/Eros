@@ -59,7 +59,6 @@ namespace Generator.GenService
             sbFull.AppendLine("using System.ServiceModel.Web;");
             sbFull.AppendLine("using System.Text;");
             sbFull.AppendLine("using System.Threading.Tasks;");
-            sbFull.AppendLine("using " + _Namespace + ".Models;");
             sbFull.AppendLine("using " + _modelNameSpace + ".Wires;");
             sbFull.AppendLine("");
             #endregion usings
