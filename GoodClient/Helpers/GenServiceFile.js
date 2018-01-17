@@ -9,6 +9,7 @@ function ServiceGen() {
         strServiceData += "function " + el.Name + "ServiceCaller() {"
 
         strServiceData += "    var self = this;";
+        strServiceData += "    var _serviceCaller = new ServiceCaller();";
 
         // Get All
 
@@ -73,7 +74,7 @@ function ServiceGen() {
         strServiceData += "    };"
 
         strServiceData += "    function Call(request, callback) {"
-        strServiceData += "        _serviceCaller.Call('Process' + " + el.Name + ", request, callback);";
+        strServiceData += "        _serviceCaller.Call('Process' + '" + el.Name + "', request, callback);";
         strServiceData += "    };"
 
         strServiceData += "};"

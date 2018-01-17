@@ -12,16 +12,28 @@ function GenServiceCaller() {
 			    var self = this;
 			    var endpoint = "";
 
-			    self.call = function(operation, request, callback) {
-			        $.ajax({
-			            url: endpoint/process,
-			            type: "POST",
-			            dataType: "application/json utf-8"
-			            data: JSON.stringify(request),
-			            success: function(response) {
-			            	callback(response);
-			            };
-			        });
+			    self.Call = function(operation, request, callback) {
+                    $.ajax({
+                        url: endpoint + operation,
+                        type: "POST",
+                        dataType: "JSON",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(request),
+                        success: function(response) {
+                            if (response != null) {
+                                if (response.Success) {
+                                    callback(response);
+                                } else {
+                                    alert("Error:" + response.ErrorHint);
+                                }
+                            } else {
+                                alert("Response is null. " + operation);
+                            }
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            alert("Error: " + textStatus);
+                        }
+                    });
 			    };
 			};
 		`;

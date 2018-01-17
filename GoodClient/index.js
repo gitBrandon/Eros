@@ -44,6 +44,10 @@ function Index() {
             })
             _serviceCallerGen.Gen();
         }
+
+        self.Load = function() {
+            $(".container").load("app/TableDetail/TableDetail.html")
+        }
     }
 
     function GetItems() {
@@ -93,12 +97,29 @@ function Index() {
         var item = response[el.Name + "List"][0];
         var strVMData = "";
 
-        strVMData += "function " + el.Name + "ViewModel() {";
+        strVMData += "function " + el.Name + "ViewModel(data, fn_modify, fn_delete) {";
         strVMData += "    var self = this;";
+        strVMData += "    if(data === undefined || data === null) {"
         for (var prop in item) {
-            strVMData += "    self." + prop + " = ko.observable();";
+
+            strVMData += "        self." + prop + " = ko.observable();";
         }
-        strVMData += "}"
+        strVMData += "    } "
+        strVMData += "    else {"
+        for (var prop in item) {
+            strVMData += "        self." + prop + " = ko.observable(data." + prop + ");";
+        }
+        strVMData += "    }"
+
+        strVMData += "    self.Modify = function() {"
+        strVMData += "        if(fn_modify !== undefined)"
+        strVMData += "          fn_modify(self);"
+        strVMData += "    };"
+        strVMData += "    self.Delete = function() {"
+        strVMData += "        if(fn_delete !== undefined)"
+        strVMData += "          fn_delete(self);"
+        strVMData += "    };"
+        strVMData += "};"
 
         _fw.Write(el.Name + "/js", "" + el.Name + "ViewModel", strVMData);
     }
