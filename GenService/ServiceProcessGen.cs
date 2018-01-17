@@ -452,7 +452,7 @@ namespace Generator.GenService
             _contents.AppendLine("logMain.Info(\"Inside process " + strName + " GetTemplateGen \");");
             _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
             _contents.AppendLine("");
-            _contents.AppendLine("retVal." + strName + "List.Add(new " + _modelNameSpace + ".Wires." + strName + "Item();");
+            _contents.AppendLine("retVal." + strName + "List.Add(new " + _modelNameSpace + ".Wires." + strName + "Item());");
             _contents.AppendLine("} break;");
         }
 

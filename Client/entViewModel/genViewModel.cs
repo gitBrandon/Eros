@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +16,15 @@ namespace Generator.Client.entViewModel
 
         public void CreateViewModel(string strName)
         {
-            GetData();
+            GetData(strName);
         }
 
-        private void GetData()
+        private void GetData(string strName)
         {
             ServiceCaller callService = new ServiceCaller();
             string response = callService.Post("ProcessTableHead", "{\"Action\":99}");
 
+            var kvPairs = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
         }
     }
 }
