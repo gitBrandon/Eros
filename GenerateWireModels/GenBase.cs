@@ -101,7 +101,7 @@ namespace Generator.GenerateWireModels
             _contents.AppendLine("[EnumMember]");
             _contents.AppendLine("FlagDeleted,");
             _contents.AppendLine("[EnumMember]");
-            _contents.AppendLine("TemplateGen");
+            _contents.AppendLine("TemplateGen = 99");
             _contents.AppendLine("}");
             _contents.AppendLine("");
         }

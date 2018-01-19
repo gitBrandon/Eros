@@ -14,7 +14,7 @@ namespace Generator
 
             Console.WriteLine("Generate service?");
             string answer = Console.ReadLine();
-            if (answer.ToUpper().Contains("Y") || answer.ToUpper().Contains("YES") || answer.ToUpper().Contains(""))
+            if (answer.ToUpper().Contains("Y") || answer.ToUpper().Contains("YES"))
             {
                 Console.WriteLine("Generating service...");
 
@@ -45,7 +45,7 @@ namespace Generator
 
             Console.WriteLine("Generate client?");
             answer = Console.ReadLine();
-            if (answer.ToUpper().Contains("Y") || answer.ToUpper().Contains("YES") || answer.ToUpper().Contains(""))
+            if (answer.ToUpper().Contains("Y") || answer.ToUpper().Contains("YES"))
             {
                 #region Client
                 foreach (var item in items)
