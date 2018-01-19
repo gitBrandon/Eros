@@ -1,6 +1,8 @@
 function GenMain() {
     var self = this;
     var _fw = new FileWriter();
+    var _configHelper = new ConfigHelper();
+    var _includeTableAsID;
 
     self.Gen = function(el, response) {
 
@@ -13,30 +15,53 @@ function GenMain() {
 				function Initialise() {
 					_vm = new ViewModel();
 					setTimeout(function() {
-						ko.applyBindings(_vm, $("#{el.Name}Page")[0]);
+						ko.applyBindings(_vm, $("#${el.Name}Page")[0]);
 					}, 60);
 					GetAll();
 				};
 
 				function ViewModel() {
 					var self = this;
-					self.MaintObj = new ${el.Name}ViewModel(null);
+					self.MaintObj = ko.observable(new ${el.Name}ViewModel());
 					self.IsAdd = ko.observable(true);
 					self.${el.Name}List = ko.observableArray([]);
 
-					var SetMaintObj = function(data) {
-						self.MaintObj = new ${el.Name}ViewModel(data);
-					}
+			        self.SetMaintObj = function(data) {
+			            for (var prop in data) {
+			                if (prop != "Modify" && prop != "Delete")
+			                    self.MaintObj()[prop](data[prop]())
+			            }
+			        };`;
 
-					var ClearMaintObj = function() {
-						self.MaintObj = new ${el.Name}ViewModel(null);
-					}
+        if (_includeTableAsID) {
+            strMainData += `self.ClearMaintObj = function() {
+				            for (var prop in self.MaintObj()) {
+				            	if(prop == '${el.Name}ID') {
+				                	self.MaintObj()[prop](0);
+				            	}
+				            	else {
+				            		self.MaintObj()[prop](null);	
+				            	}
+				            }
+				        };`;
+        } else {
+            strMainData += `self.ClearMaintObj = function() {
+				            for (var prop in self.MaintObj()) {
+				            	if(prop == 'ID') {
+				                	self.MaintObj()[prop](0);
+				            	}
+				            	else {
+				            		self.MaintObj()[prop](null);	
+				            	}
+				            }
+				        };`;
+        }
 
-			        self.Add = function (area) {
+        strMainData += `self.Add = function () {
             			self.IsAdd(true);
-			            ClearMaintObj();
+			            self.ClearMaintObj();
             			$("#create-edit-${el.Name}-modal").modal("show");
-        			}
+        			};
 
 			        self.Save = function (vm, e) {
 			            if (e.isDefaultPrevented()) {
@@ -47,7 +72,7 @@ function GenMain() {
 			                    function callback_Create(response) {
 			                        self.${el.Name}List.push(new ${el.Name}ViewModel(response.${el.Name}List[0], Modify, Delete));
 			                        $("#create-edit-${el.Name}-modal").modal("hide");
-			                        ClearMaintObj();
+			                        self.ClearMaintObj();
 			                    }
 			                    _${el.Name}ServiceCaller.Create(self.MaintObj, callback_Create)
 			                } else {
@@ -56,7 +81,7 @@ function GenMain() {
 			                        self.${el.Name}List([]);
 			                        GetAll();
 			                        $("#create-edit-${el.Name}-modal").modal("hide");
-			                        ClearMaintObj();
+			                        self.ClearMaintObj();
 			                    }
 
 			                    _${el.Name}ServiceCaller.Modify(self.MaintObj, callback_modify);
@@ -81,12 +106,11 @@ function GenMain() {
 				function Modify(self) {
 					_vm.SetMaintObj(self);
 					_vm.IsAdd(false);
-					ClearMaintObj();
 					$("#create-edit-${el.Name}-modal").modal("show");
 				}
 
 				function Delete(self) {
-					_${el.Name}ServiceCaller.Delete(self.ID, function(response) {
+					_${el.Name}ServiceCaller.Delete(self.ID(), function(response) {
 						_vm.${el.Name}List.remove(self);
 					});
 				}
@@ -107,4 +131,12 @@ function GenMain() {
 
         _fw.Write(el.Name + "/js", el.Name, strMainData);
     }
+
+    function GetIncludeTableAsID() {
+        _configHelper.GetIncludeTableAsID(function(response) {
+            _includeTableAsID = response;
+        })
+    }
+
+    GetIncludeTableAsID();
 }

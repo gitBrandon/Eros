@@ -28,6 +28,15 @@ function ConfigHelper() {
         });
     }
 
+    self.GetIncludeTableAsID = function(callback) {
+        var itaid;
+
+        Get(function(response) {
+            itaid = JSON.parse(response).IncludeTableAsID;
+            callback(itaid);
+        });
+    }
+
     function Get(callback) {
         $.ajax({
             url: "config.json",

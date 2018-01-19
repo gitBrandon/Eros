@@ -7,41 +7,47 @@
 				function Initialise() {
 					_vm = new ViewModel();
 					setTimeout(function() {
-						ko.applyBindings(_vm);
+						ko.applyBindings(_vm, $("#TableHeadPage")[0]);
 					}, 60);
 					GetAll();
 				};
 
 				function ViewModel() {
 					var self = this;
-					self.MaintObj = new TableHeadViewModel(null);
+					self.MaintObj = ko.observable(new TableHeadViewModel());
 					self.IsAdd = ko.observable(true);
 					self.TableHeadList = ko.observableArray([]);
 
-					var SetMaintObj = function(data) {
-						self.MaintObj = new TableHeadViewModel(data);
-					}
-
-					var ClearMaintObj = function() {
-						self.MaintObj = new TableHeadViewModel(null);
-					}
-
-			        _self.Add = function (area) {
-            			_self.IsAdd(true);
-			            ClearMaintObj();
+			        self.SetMaintObj = function(data) {
+			            for (var prop in data) {
+			                if (prop != "Modify" && prop != "Delete")
+			                    self.MaintObj()[prop](data[prop]())
+			            }
+			        };self.ClearMaintObj = function() {
+				            for (var prop in self.MaintObj()) {
+				            	if(prop == 'ID') {
+				                	self.MaintObj()[prop](0);
+				            	}
+				            	else {
+				            		self.MaintObj()[prop](null);	
+				            	}
+				            }
+				        };self.Add = function () {
+            			self.IsAdd(true);
+			            self.ClearMaintObj();
             			$("#create-edit-TableHead-modal").modal("show");
-        			}
+        			};
 
-			        self.Save = function (e) {
+			        self.Save = function (vm, e) {
 			            if (e.isDefaultPrevented()) {
 			                // handle the invalid form...
 			            } else {
 			                e.preventDefault();            
-			                if (_self.IsAdd()) {
+			                if (self.IsAdd()) {
 			                    function callback_Create(response) {
 			                        self.TableHeadList.push(new TableHeadViewModel(response.TableHeadList[0], Modify, Delete));
 			                        $("#create-edit-TableHead-modal").modal("hide");
-			                        ClearMaintObj();
+			                        self.ClearMaintObj();
 			                    }
 			                    _TableHeadServiceCaller.Create(self.MaintObj, callback_Create)
 			                } else {
@@ -50,7 +56,7 @@
 			                        self.TableHeadList([]);
 			                        GetAll();
 			                        $("#create-edit-TableHead-modal").modal("hide");
-			                        ClearMaintObj();
+			                        self.ClearMaintObj();
 			                    }
 
 			                    _TableHeadServiceCaller.Modify(self.MaintObj, callback_modify);
@@ -75,12 +81,11 @@
 				function Modify(self) {
 					_vm.SetMaintObj(self);
 					_vm.IsAdd(false);
-					ClearMaintObj();
 					$("#create-edit-TableHead-modal").modal("show");
 				}
 
 				function Delete(self) {
-					_TableHeadServiceCaller.Delete(self.ID, function(response) {
+					_TableHeadServiceCaller.Delete(self.ID(), function(response) {
 						_vm.TableHeadList.remove(self);
 					});
 				}

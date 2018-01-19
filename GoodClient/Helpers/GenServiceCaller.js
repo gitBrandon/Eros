@@ -10,11 +10,11 @@ function GenServiceCaller() {
         var strServiceCallerData = `
 			function ServiceCaller() {
 			    var self = this;
-			    var endpoint = "";
+			    var endpoint = "${_serviceEndPoint}";
 
 			    self.Call = function(operation, request, callback) {
                     $.ajax({
-                        url: endpoint + operation,
+                        url: endpoint + "/" + operation,
                         type: "POST",
                         dataType: "JSON",
                         contentType: "application/json; charset=utf-8",

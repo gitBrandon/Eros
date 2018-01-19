@@ -1,5 +1,6 @@
 {
 	"ServiceEndpoint": "http://192.168.1.79/TestGen/ManagementService",
 	"Items": ["TableHead", "TableDetail"],
-	"FilePath": "D:/Work/Brandon/Output/"
+	"IncludeTableAsID": false,
+	"FilePath": "C:/Work/Private/Git/Eros/GoodClient/app/"
 }

@@ -2,6 +2,7 @@ function Index() {
 
     var _vm;
     var _serviceEndPoint;
+    var _includeTableAsID;
     var _configHelper = new ConfigHelper();
     // Component
     var _mainGen = new GenMain();
@@ -21,6 +22,7 @@ function Index() {
         GetItems();
         GetServiceEndpoint();
         GetFilePath();
+        GetIncludeTableAsID();
     }
 
     function MainViewModel() {
@@ -70,6 +72,12 @@ function Index() {
         })
     }
 
+    function GetIncludeTableAsID() {
+        _configHelper.GetIncludeTableAsID(function(response) {
+            _includeTableAsID = response;
+        })
+    }
+
     function GetFilePath() {
         _configHelper.GetFilePath(function(response) {
             _filePath = response;
@@ -101,13 +109,45 @@ function Index() {
         strVMData += "    var self = this;";
         strVMData += "    if(data === undefined || data === null) {"
         for (var prop in item) {
-
-            strVMData += "        self." + prop + " = ko.observable();";
+            if (_includeTableAsID) {
+                if (prop == el.Name + "ID") {
+                    strVMData += "        self." + prop + " = ko.observable(0);";
+                } else {
+                    strVMData += "        self." + prop + " = ko.observable();";
+                }
+            } else {
+                if (prop == "ID") {
+                    strVMData += "        self." + prop + " = ko.observable(0);";
+                } else {
+                    strVMData += "        self." + prop + " = ko.observable();";
+                }
+            }
         }
         strVMData += "    } "
         strVMData += "    else {"
         for (var prop in item) {
-            strVMData += "        self." + prop + " = ko.observable(data." + prop + ");";
+
+            if (_includeTableAsID) {
+                if (prop == el.Name + "ID") {
+                    strVMData += "        if(data." + prop + " === undefined || data." + prop + " === null) {";
+                    strVMData += "            self." + prop + " = ko.observable(0);";
+                    strVMData += "        } else {";
+                    strVMData += "            self." + prop + " = ko.observable(data." + prop + ");";
+                    strVMData += "        }"
+                } else {
+                    strVMData += "        self." + prop + " = ko.observable(data." + prop + ");";
+                }
+            } else {
+                if (prop == "ID") {
+                    strVMData += "        if(data." + prop + " === undefined || data." + prop + " === null) {";
+                    strVMData += "            self." + prop + " = ko.observable(0);";
+                    strVMData += "        } else {";
+                    strVMData += "            self." + prop + " = ko.observable(data." + prop + ");";
+                    strVMData += "        }"
+                } else {
+                    strVMData += "        self." + prop + " = ko.observable(data." + prop + ");";
+                }
+            }
         }
         strVMData += "    }"
 
