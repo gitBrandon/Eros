@@ -3,22 +3,16 @@
 
 				var _vm;
 				var _TableHeadServiceCaller = new TableHeadServiceCaller();
-
 				function Initialise() {
 					_vm = new ViewModel();
 					setTimeout(function() {
 						ko.applyBindings(_vm, $("#TableHeadPage")[0]);
 					}, 60);
-					GetAll();
-				};
-
-				function ViewModel() {
+					GetAll();};function ViewModel() {
 					var self = this;
 					self.MaintObj = ko.observable(new TableHeadViewModel());
 					self.IsAdd = ko.observable(true);
-					self.TableHeadList = ko.observableArray([]);
-
-			        self.SetMaintObj = function(data) {
+					self.TableHeadList = ko.observableArray([]);self.SetMaintObj = function(data) {
 			            for (var prop in data) {
 			                if (prop != "Modify" && prop != "Delete")
 			                    self.MaintObj()[prop](data[prop]())
@@ -44,9 +38,7 @@
 			            } else {
 			                e.preventDefault();            
 			                if (self.IsAdd()) {
-			                    function callback_Create(response) {
-			                        self.TableHeadList.push(new TableHeadViewModel(response.TableHeadList[0], Modify, Delete));
-			                        $("#create-edit-TableHead-modal").modal("hide");
+			                    function callback_Create(response) {_vm.TableHeadList.push(new TableHeadViewModel(response.TableHeadList[0], Modify, Delete));$("#create-edit-TableHead-modal").modal("hide");
 			                        self.ClearMaintObj();
 			                    }
 			                    _TableHeadServiceCaller.Create(self.MaintObj, callback_Create)
@@ -69,16 +61,12 @@
 
 				function GetAll() {
 					_TableHeadServiceCaller.GetAll(function(response) {
-						$(response.TableHeadList).each(function(idx, el) {
-							_vm.TableHeadList.push(new TableHeadViewModel(el, Modify, Delete));
-						});
+						$(response.TableHeadList).each(function(idx, el) {_vm.TableHeadList.push(new TableHeadViewModel(el, Modify, Delete));});
 				        setTimeout(() => {
 	            			$('.dropdown-toggle-maint').dropdown();
 	    				}, 200);
 					});
-				};
-
-				function Modify(self) {
+				};function Modify(self) {
 					_vm.SetMaintObj(self);
 					_vm.IsAdd(false);
 					$("#create-edit-TableHead-modal").modal("show");

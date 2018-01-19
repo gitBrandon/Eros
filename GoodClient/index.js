@@ -4,6 +4,7 @@ function Index() {
     var _serviceEndPoint;
     var _includeTableAsID;
     var _configHelper = new ConfigHelper();
+    var _linkHelper = new LinkHelper();
     // Component
     var _mainGen = new GenMain();
     var _serviceGen = new ServiceGen();
@@ -103,9 +104,23 @@ function Index() {
 
     function GenViewModel(el, response) {
         var item = response[el.Name + "List"][0];
+        var linkDataArr = _linkHelper.GetLinkData(item);
         var strVMData = "";
 
-        strVMData += "function " + el.Name + "ViewModel(data, fn_modify, fn_delete) {";
+
+        if (linkDataArr.length <= 0) {
+            strVMData += "function " + el.Name + "ViewModel(data, fn_modify, fn_delete) {";
+        } else {
+            strVMData += "function " + el.Name + "ViewModel(data, fn_modify, fn_delete,";
+            $(linkDataArr).each(function(idx, el) {
+                if (idx != linkDataArr.length - 1) {
+                    strVMData += el + "List, "
+                } else {
+                    strVMData += el + "List) {";
+                }
+            })
+        }
+
         strVMData += "    var self = this;";
         strVMData += "    if(data === undefined || data === null) {"
         for (var prop in item) {
@@ -150,6 +165,27 @@ function Index() {
             }
         }
         strVMData += "    }"
+
+        $(linkDataArr).each(function(idx, el) {
+            strVMData += "if (" + el + "List !==undefined) {";
+            strVMData += "self." + el + "_Friendly =  ko.computed(function() {";
+            strVMData += "var result = " + el + "List().filter(function(obj) {";
+            if (_includeTableAsID) {
+                strVMData += "return obj." + el + "ID() == self." + el + "ID();";
+            } else {
+                strVMData += "return obj.ID() == self." + el + "ID();";
+            }
+            strVMData += "});";
+            strVMData += "if (result.length > 0) {";
+            strVMData += "   return result[0].Name();"
+            strVMData += "} else {"
+            strVMData += "   return self.TableHeadID();"
+            strVMData += "}"
+            strVMData += "});";
+            strVMData += "} else {";
+            strVMData += "self." + el + "_Friendly =  ko.observable();";
+            strVMData += "}";
+        })
 
         strVMData += "    self.Modify = function() {"
         strVMData += "        if(fn_modify !== undefined)"
