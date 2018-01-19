@@ -10,3 +10,5 @@ Generator\.csproj\.user
 GenViewModel/\.vs/
 
 GoodClient/node_modules/
+
+\.vscode/
