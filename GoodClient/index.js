@@ -104,7 +104,7 @@ function Index() {
 
     function GenViewModel(el, response) {
         var item = response[el.Name + "List"][0];
-        var linkDataArr = _linkHelper.GetLinkData(item);
+        var linkDataArr = _linkHelper.GetLinkData(item, el.Name);
         var strVMData = "";
 
 
@@ -179,7 +179,7 @@ function Index() {
             strVMData += "if (result.length > 0) {";
             strVMData += "   return result[0].Name();"
             strVMData += "} else {"
-            strVMData += "   return self.TableHeadID();"
+            strVMData += "   return self." + el + "ID();"
             strVMData += "}"
             strVMData += "});";
             strVMData += "} else {";

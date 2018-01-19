@@ -7,7 +7,7 @@ function GenMain() {
 
     self.Gen = function(el, response) {
         var item = response[el.Name + "List"][0];
-        var linkDataArr = _linkHelper.GetLinkData(item);
+        var linkDataArr = _linkHelper.GetLinkData(item, el.Name);
 
         var strMainData = `
 			function ${el.Name}() {

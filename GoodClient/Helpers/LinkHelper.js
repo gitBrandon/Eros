@@ -4,13 +4,12 @@ function LinkHelper() {
     var _configHelper = new ConfigHelper();
     var _entityList;
 
-    self.GetLinkData  = function(serviceResult) {
+    self.GetLinkData  = function(serviceResult, currentEntityIgnore) {
         var response = [];
 
         for (var prop in serviceResult) {
             var result = _entityList.filter(function(el) {
-                console.log(prop)
-                if (prop.indexOf(el) > -1) {
+                if (prop.indexOf(el) > -1 && prop.indexOf(currentEntityIgnore) < 0) {
                     return el;
                 }
             })
