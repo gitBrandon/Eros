@@ -41,7 +41,8 @@ namespace Generator.GenService
                 Modify(strName);
                 ModifyList(strName);
                 Delete(strName);
-                DeleteFlag(strName);
+                if (Config.GetExcludeDeleteFlag() == false)
+                    DeleteFlag(strName);
                 GenTemplateGet(strName);
 
                 Save(strName);
@@ -160,11 +161,13 @@ namespace Generator.GenService
 
             if (_UseTableID)
             {
-                _contents.AppendLine("db" + strName + "Item." + strName + "UID = Guid.NewGuid();");
+                if (Config.GetExcludeUID() == false)
+                    _contents.AppendLine("db" + strName + "Item." + strName + "UID = Guid.NewGuid();");
             }
             else
             {
-                _contents.AppendLine("db" + strName + "Item.UID = Guid.NewGuid();");
+                if (Config.GetExcludeUID() == false)
+                    _contents.AppendLine("db" + strName + "Item.UID = Guid.NewGuid();");
             }
             _contents.AppendLine("var successItem = db.Create(db" + strName + "Item);");
             _contents.AppendLine("if (successItem == null)");

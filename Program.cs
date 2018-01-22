@@ -31,6 +31,9 @@ namespace Generator
                     wireGen.CreateWire(item);
                 }
 
+                GenerateWireModels.Mapping mappingGen = new GenerateWireModels.Mapping();
+                mappingGen.CreateMapping(items);
+
                 GenService.ServiceInterfaceGen serviceInterfaceGen = new GenService.ServiceInterfaceGen();
                 serviceInterfaceGen.CreateInterface(Config.GetServiceName(), items);
 
@@ -43,21 +46,6 @@ namespace Generator
                 #endregion Service
             }
 
-            Console.WriteLine("Generate client?");
-            answer = Console.ReadLine();
-            if (answer.ToUpper().Contains("Y") || answer.ToUpper().Contains("YES"))
-            {
-                #region Client
-                foreach (var item in items)
-                {
-                    Client.entService.GenService genServiceCaller = new Client.entService.GenService();
-                    genServiceCaller.CreateService(item);
-
-                    Client.entViewModel.genViewModel genViewModel = new Client.entViewModel.genViewModel();
-                    genViewModel.CreateViewModel(item);
-                }
-                #endregion Client
-            }
             Console.ReadLine();
         }
     }

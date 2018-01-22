@@ -9,6 +9,29 @@ namespace Generator
 {
     public class Config
     {
+
+        public static bool GetExcludeUID()
+        {
+            if (ConfigurationManager.AppSettings["ExcludeUID"] == null)
+                return false;
+
+            if (ConfigurationManager.AppSettings["ExcludeUID"] == "1")
+                return true;
+            else
+                return false;
+        }
+
+        public static bool GetExcludeDeleteFlag()
+        {
+            if (ConfigurationManager.AppSettings["ExcludeDeleteFlag"] == null)
+                return false;
+
+            if (ConfigurationManager.AppSettings["ExcludeDeleteFlag"] == "1")
+                return true;
+            else
+                return false;
+        }
+
         public static string GetEFName()
         {
             return ConfigurationManager.AppSettings["EF_Name"];

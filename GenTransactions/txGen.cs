@@ -35,7 +35,9 @@ namespace Generator.GenTransactions
                 ModifyList(strName);
                 AddOrUpdate(strName);
                 Delete(strName);
-                DeleteFlag(strName);
+
+                if (Config.GetExcludeDeleteFlag() == false)
+                    DeleteFlag(strName);
 
                 Save(strName);
             }

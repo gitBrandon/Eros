@@ -46,9 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\entService\GenService.cs" />
-    <Compile Include="Client\entViewModel\genViewModel.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="GenerateWireModels\Mapping.cs" />
     <Compile Include="GenerateWireModels\WireGen.cs" />
     <Compile Include="GenerateWireModels\GenBase.cs" />
     <Compile Include="GenService\ServiceImpGen.cs" />
@@ -67,8 +66,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Client\common\" />
-    <Folder Include="Client\entGeneral\" />
     <Folder Include="CreateScript\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
