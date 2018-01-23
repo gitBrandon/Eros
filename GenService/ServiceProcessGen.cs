@@ -139,7 +139,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("case " + _modelNameSpace + ".Base.Action.Create:");
             _contents.AppendLine("{");
-
+            _contents.AppendLine("logMain.Info(\"Inside process " + strName + " Create \");");
             _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
 
             #region validate
@@ -148,7 +148,7 @@ namespace Generator.GenService
             _contents.AppendLine("retVal.Success = false;");
             _contents.AppendLine("retVal.ErrorHint = request." + strName + "Item.Error;");
             _contents.AppendLine("retVal.TechnicalError = \"request." + strName + "Item.IsValid() is not valid\";");
-            _contents.AppendLine("logMain.Warn(\"Failed to create " + strName + " " + " item.Error \");");
+            _contents.AppendLine("logMain.Warn(\"Failed to create : " + strName + " \" + request." + strName + "Item.Error);");
             _contents.AppendLine("return retVal;");
             _contents.AppendLine("}");
             #endregion validate
@@ -196,7 +196,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("case " + _modelNameSpace + ".Base.Action.CreateList:");
             _contents.AppendLine("{");
-
+            _contents.AppendLine("logMain.Info(\"Inside process " + strName + " CreateList \");");
             _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
 
             //#region validate
@@ -245,7 +245,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("case " + _modelNameSpace + ".Base.Action.Modify:");
             _contents.AppendLine("{");
-
+            _contents.AppendLine("logMain.Info(\"Inside process " + strName + " Modify \");");
             _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
 
             #region validate
@@ -254,7 +254,7 @@ namespace Generator.GenService
             _contents.AppendLine("retVal.Success = false;");
             _contents.AppendLine("retVal.ErrorHint = request." + strName + "Item.Error;");
             _contents.AppendLine("retVal.TechnicalError = \"request." + strName + "Item.IsValid() is not valid\";");
-            _contents.AppendLine("logMain.Warn(\"Failed to modify " + strName + " " + " item.Error \");");
+            _contents.AppendLine("logMain.Warn(\"Failed to create : " + strName + " \" + request." + strName + "Item.Error);");
             _contents.AppendLine("return retVal;");
             _contents.AppendLine("}");
             #endregion validate
@@ -283,7 +283,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("case " + _modelNameSpace + ".Base.Action.ModifyList:");
             _contents.AppendLine("{");
-
+            _contents.AppendLine("logMain.Info(\"Inside process " + strName + " ModifyList \");");
             _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
 
             //#region validate
@@ -332,6 +332,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("case " + _modelNameSpace + ".Base.Action.Delete:");
             _contents.AppendLine("{");
+            _contents.AppendLine("logMain.Info(\"Inside process " + strName + " Delete \");");
             _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
             #region Test custom fields
             _contents.AppendLine("if (string.IsNullOrEmpty(request.CustomField))");
@@ -392,6 +393,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("case " + _modelNameSpace + ".Base.Action.FlagDeleted:");
             _contents.AppendLine("{");
+            _contents.AppendLine("logMain.Info(\"Inside process " + strName + " DeleteFlag \");");
             _contents.AppendLine("retVal." + strName + "List = new List<" + _modelNameSpace + ".Wires." + strName + "Item>();");
             #region Test custom fields
             _contents.AppendLine("if (string.IsNullOrEmpty(request.CustomField))");
