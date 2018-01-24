@@ -12,6 +12,7 @@ namespace Generator.GenService
         string _filePath = Path.Combine(Environment.CurrentDirectory, "output", "ServiceImplementations");
         string _modelNameSpace = Config.GetModelNamespace();
         string _Namespace = Config.GetMainNamespace();
+        string _ServiceNamespace = Config.GetServiceProcessNamespace();
         string _ServiceName = Config.GetServiceName();
         StringBuilder _contents = new StringBuilder();
 
@@ -25,7 +26,7 @@ namespace Generator.GenService
             try
             {
                 Directory.CreateDirectory(_filePath);
-                File.Create(_filePath + "/" + strName + ".cs").Close();
+                File.Create(_filePath + "/" + strName + "Imp.cs").Close();
 
                 foreach (var item in items)
                 {
@@ -44,7 +45,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("public " + _modelNameSpace + ".Wires." + strName + "Response Process" + strName + "(" + _modelNameSpace + ".Wires." + strName + "Request request)");
             _contents.AppendLine("{");
-            _contents.AppendLine(_Namespace + ".ServiceProcess." + strName + "Process processObj = new " + _Namespace + ".ServiceProcess." + strName + "Process();");
+            _contents.AppendLine(_ServiceNamespace + ".ServiceProcess." + strName + "Process processObj = new " + _ServiceNamespace + ".ServiceProcess." + strName + "Process();");
             _contents.AppendLine("return processObj.Process" + strName + "(request);");
             _contents.AppendLine("}");
             _contents.AppendLine("");
@@ -72,7 +73,7 @@ namespace Generator.GenService
             sbFull.AppendLine("{");
             #region class/interface
             sbFull.AppendLine("[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerCall, UseSynchronizationContext = false)]");
-            sbFull.AppendLine("public class " + strName + " : " + _Namespace + ".Contracts.I" + _ServiceName);
+            sbFull.AppendLine("public class " + strName + "Imp : " + _Namespace + ".Contracts.I" + _ServiceName);
             sbFull.AppendLine("{");
             sbFull.AppendLine(_contents.ToString());
             sbFull.AppendLine("}");
@@ -83,7 +84,7 @@ namespace Generator.GenService
             string result = sbFull.ToString();
             try
             {
-                File.WriteAllText(_filePath + "/" + strName + ".cs", sbFull.ToString());
+                File.WriteAllText(_filePath + "/" + strName + "Imp.cs", sbFull.ToString());
                 Console.WriteLine("Added new Service implementation file: " + strName + ".cs");
             }
             catch (Exception exc)
