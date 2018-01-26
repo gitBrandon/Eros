@@ -43,6 +43,15 @@ namespace Generator
                 GenerateWireModels.GenBase baseGen = new GenerateWireModels.GenBase();
                 baseGen.CreateBase(Config.GetServiceName());
 
+                GenHost.CORS.GenCors corsGen = new GenHost.CORS.GenCors();
+                corsGen.CreateCors();
+
+                GenHost.ServiceHost.GenServiceHost serviceHandlerGen = new GenHost.ServiceHost.GenServiceHost();
+                serviceHandlerGen.CreateHoster();
+
+                GenHost.GenHostProgram.GenHostProgram programClass = new GenHost.GenHostProgram.GenHostProgram();
+                programClass.CreateProgram();
+
                 #endregion Service
             }
 

@@ -50,6 +50,9 @@
     <Compile Include="GenerateWireModels\Mapping.cs" />
     <Compile Include="GenerateWireModels\WireGen.cs" />
     <Compile Include="GenerateWireModels\GenBase.cs" />
+    <Compile Include="GenHost\CORS\GenCors.cs" />
+    <Compile Include="GenHost\GenHostProgram\GenHostProgram.cs" />
+    <Compile Include="GenHost\ServiceHost\GenServiceHost.cs" />
     <Compile Include="GenService\ServiceImpGen.cs" />
     <Compile Include="GenService\ServiceInterfaceGen.cs" />
     <Compile Include="GenService\ServiceProcessGen.cs" />
