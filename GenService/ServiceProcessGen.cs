@@ -218,7 +218,7 @@ namespace Generator.GenService
             _contents.AppendLine("foreach (var item in request." + strName + "List)");
             _contents.AppendLine("{");
             _contents.AppendLine("// Automap to db model");
-            _contents.AppendLine("" + _modelNameSpace + "." + strName + " db" + strName + "Item = Mapper.Map<" + _modelNameSpace + "." + strName + ">(request." + strName + "Item);");
+            _contents.AppendLine("" + _modelNameSpace + "." + strName + " db" + strName + "Item = Mapper.Map<" + _modelNameSpace + "." + strName + ">(item);");
             _contents.AppendLine("lsItemsToCreate.Add(db" + strName + "Item);");
             _contents.AppendLine("// END mapping");
             _contents.AppendLine("}");
