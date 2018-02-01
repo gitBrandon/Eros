@@ -1,6 +1,6 @@
 {
-	"ServiceEndpoint": "http://192.168.1.79/TestGen/ManagementService",
-	"Items": ["Access_Gates","Access_Group","Access_GroupGroups","Access_EventLog","Access_AccessLog","Access_OfflinePrefix","Access_GroupTiers","Access_GroupMembers","Access_Config"],
+	"ServiceEndpoint": "http://localhost/tblBonus/ManagementService/Reports",
+	"Items": ["ActiveGameOverview", "MystProg", "TableGame", "TableRevenue"],
 	"IncludeTableAsID": false,
-	"FilePath": "C:/Work/Private/eros/bin/Debug/output/Client/"
+	"FilePath": "C:/Work/private/Incodenito/git/tblbonus/tblBonusApp/Output/"
 }

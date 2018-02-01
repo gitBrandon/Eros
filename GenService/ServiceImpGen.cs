@@ -45,7 +45,7 @@ namespace Generator.GenService
         {
             _contents.AppendLine("public " + _modelNameSpace + ".Wires." + strName + "Response Process" + strName + "(" + _modelNameSpace + ".Wires." + strName + "Request request)");
             _contents.AppendLine("{");
-            _contents.AppendLine(_ServiceNamespace + ".ServiceProcess." + strName + "Process processObj = new " + _ServiceNamespace + ".ServiceProcess." + strName + "Process();");
+            _contents.AppendLine(_ServiceNamespace + "." + strName + "Process processObj = new " + _ServiceNamespace + "." + strName + "Process();");
             _contents.AppendLine("return processObj.Process" + strName + "(request);");
             _contents.AppendLine("}");
             _contents.AppendLine("");
